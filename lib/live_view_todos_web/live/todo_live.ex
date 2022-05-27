@@ -6,22 +6,21 @@ defmodule LiveViewTodosWeb.TodoLive do
     {:ok, fetch(socket)}
   end
 
-
   def handle_event("add", %{"todo" => todo}, socket) do
     Todos.create_todo(todo)
 
-    {:no_reply, fetch(socket)}
+    {:no_reply, socket}
   end
 
   def handle_info({Todos, [:todo | _], _}, socket) do
-    {:no_reply, fetch(socket)}
+    {:no_reply, socket}
   end
 
   def handle_event("toggle_done", %{"id" => id}, socket) do
    todo = Todos.get_todo!(id)
    Todos.update_todo(todo, %{done: !todo.done})
 
-    {:no_reply, fetch(socket)}
+    {:no_reply, socket}
   end
 
   defp fetch(socket) do
